@@ -4,10 +4,9 @@ import LoginImage from ".././assets/images/Section.png";
 import { FcGoogle } from "react-icons/fc";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useDispatch } from "react-redux";
 
 import "./auth.css";
-import { setToken } from "../Redux/Slices/ContactSlice";
+
 
 const Login = () => {
   const [inputData, setInputData] = useState({
@@ -15,7 +14,7 @@ const Login = () => {
     password: "",
   });
 
-  const dispatch = useDispatch();
+ 
 
   const navigate = useNavigate();
 
@@ -29,40 +28,20 @@ const Login = () => {
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit =  (e) => {
     e.preventDefault();
-    // console.log(inputData);
+  
 
     const { email, password } = inputData;
-    //  toast.success('Registration successful');
 
-    const res = await fetch("/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email,
-        password,
-      }),
-    });
-    const data = await res.json();
-    
-    const token = data.responseData.token;
-    dispatch(setToken(token));
+    if(!email || !password){
 
-    if (res.status === 422) {
-      toast.error("invalid credential");
-    } else if (res.status === 404 || res.status === 400) {
-      toast.error("User not found!");
-    } else if (res.status === 500) {
-      toast.error("Internal server Error");
-    } else {
-      toast.success("Sign in Successfully:)");
-      setTimeout(() => {
-        navigate("/dashboard");
-      }, 1000);
+     toast.error('Invalid credential');
     }
+    else{
+      navigate('/dashboard')
+    }
+      
   };
 
   return (

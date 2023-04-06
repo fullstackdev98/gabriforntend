@@ -15,69 +15,25 @@ const initialValues={
 
 
 const Signup = () => {
-  // const[data, setData]= useState()
+  
   const navigate=useNavigate();
-  // console.log('d', data)
-  // const [inputData, setInputData] = useState({
-  //   name: "",
-  //   email: "",
-  //   password: "",
-  // });
+  
 
   const {values, errors, handleBlur,touched, handleChange, handleSubmit}=useFormik({
     initialValues:initialValues,
     validationSchema:signUpSchema,
     onSubmit:async(values,e)=>{
-      // e.preventDefault();
-      // setData(values)
+    
      const {name, email, password}= values;
-    //  toast.success('Registration successful');
-    
-    const res= await fetch('/signup',{
-      method:'POST',
-      headers:{
-        'Content-Type' : 'application/json'
-      },
-      body:JSON.stringify({
-        name, email, password
-      })
-    });
-    const data= await res.json();
-    if(res.status===422 || !data || res.status===400){
-        window.alert('Invalid Registration');
-    } else{
-      window.alert('Registration Successfull');
-      setTimeout(()=>{
+      if(name && email && password){
         navigate('/')
-     }, 1000)
-    }
-    
+      } 
    
     }
   })
   
 
   
-  // const handleInput = (e) => {
-  //   const { name, value } = e.target;
-  //   setInputData((preval) => {
-  //     return {
-  //       ...preval,
-  //       [name]: value,
-  //     };
-  //   });
-  // };
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   setChunkData(inputData);
-  //   toast("Registration Successfully:)");
-  //   setInputData({
-  //     name: "",
-  //     email: "",
-  //     password: "",
-  //   });
-  // };
 
   return (
     <div className="signup_wrapper">
